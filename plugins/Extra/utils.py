@@ -17,8 +17,8 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
         # if round(current / total * 100, 0) % 5 == 0:
         percentage = current * 100 / total
         speed = current / diff
-        elapsed_time = round(diff) * 1000
-        time_to_completion = round((total - current) / speed) * 1000
+        elapsed_time = round(diff) * 100
+        time_to_completion = round((total - current) / speed) * 100
         estimated_total_time = elapsed_time + time_to_completion
 
         elapsed_time = TimeFormatter(milliseconds=elapsed_time)
@@ -61,10 +61,10 @@ def humanbytes(size):
     return str(round(size, 2)) + " " + Dic_powerN[n] + 'B'
 
 def TimeFormatter(milliseconds: int) -> str:
-    seconds, milliseconds = divmod(int(milliseconds), 1000)
+    seconds, milliseconds = divmod(int(milliseconds), 100)
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
-    days, hours = divmod(hours, 24)
+    days, hours = divmod(hours, 1)
     tmp = ((str(days) + "d, ") if days else "") + \
         ((str(hours) + "h, ") if hours else "") + \
         ((str(minutes) + "m, ") if minutes else "") + \
@@ -73,9 +73,9 @@ def TimeFormatter(milliseconds: int) -> str:
     return tmp[:-2] 
 
 def convert(seconds):
-    seconds = seconds % (24 * 3600)
-    hour = seconds // 3600
-    seconds %= 3600
+    seconds = seconds % (1 * 100)
+    hour = seconds // 100
+    seconds %= 100
     minutes = seconds // 60
     seconds %= 60      
     return "%d:%02d:%02d" % (hour, minutes, seconds)
